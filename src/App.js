@@ -40,7 +40,7 @@ function App() {
         }
       );
     } else {
-      console.log("Navegador não suporta Geolocalização!");
+      alert("Erro ao obter localização!");
     }
     const keyMaps = "AIzaSyBqoWRLTUg8_ijd6nFe8d3eEH_uch6j65A";
     const keyName = "0f948b34ca826394a9f82d2a2659abbc";
@@ -88,26 +88,31 @@ function App() {
           <Tittle>Localização atual</Tittle>
           <DescriptionTittle>
             Latitude:
-            {loading ? <CircularProgress size={20} /> : result.coord?.lat}
+            {loading ? <CircularProgress size={20} /> : ` ${result.coord?.lat}`}
           </DescriptionTittle>
           <DescriptionTittle>
             Longitude:
-            {loading ? <CircularProgress size={20} /> : result.coord?.lon}
+            {loading ? <CircularProgress size={20} /> : ` ${result.coord?.lon}`}
           </DescriptionTittle>
 
           <DescriptionText>
-            Cidade: {loading ? <CircularProgress size={20} /> : result.name}
+            Cidade:
+            {loading ? <CircularProgress size={20} /> : ` ${result.name}`}
           </DescriptionText>
           <DescriptionText>
             País:
-            {loading ? <CircularProgress size={20} /> : result.sys?.country}
+            {loading ? (
+              <CircularProgress size={20} />
+            ) : (
+              ` ${result.sys?.country}`
+            )}
           </DescriptionText>
           <DescriptionText>
             Temperatura:
             {loading ? (
               <CircularProgress size={20} />
             ) : (
-              convertKelvinToCelsius(result.main?.temp)
+              ` ${convertKelvinToCelsius(result.main?.temp)}`
             )}
             {loading === false && "°C"}
           </DescriptionText>
@@ -118,17 +123,19 @@ function App() {
               {loading ? (
                 <CircularProgress size={20} />
               ) : (
-                resultsMaps.length > 0 &&
-                resultsMaps
-                  .map((item) => item.address_components)[0]
-                  .map((item) => item.long_name)
-                  .join(" - ")
+                ` ${
+                  resultsMaps.length > 0 &&
+                  resultsMaps
+                    .map((item) => item.address_components)[0]
+                    .map((item) => item.long_name)
+                    .join(" - ")
+                }`
               )}
             </DescriptionText>
           </div>
           <ButtonRefresh
             variant="contained"
-            style={{ marginLeft: 16, marginTop: 40 }}
+            style={{ marginLeft: 16, marginTop: 20 }}
             onClick={getLocationAttually}
           >
             Atualizar localização
